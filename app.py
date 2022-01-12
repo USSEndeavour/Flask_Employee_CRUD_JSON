@@ -64,6 +64,13 @@ def get_employee_by_id(id):
     employee = employee_schema.dump(get_employee)
     return make_response(jsonify({"employee": employee}))
 
+@app.route('/api/v2/employee/<id>', methods=['DELETE'])
+def delete_employee_by_id(id):
+    get_employee = Employee.query.get(id)
+    db.session.delete(get_employee)
+    db.session.commit()
+    return make_response("", 204)
+
 @app.route('/api/v2/employee/<id>', methods=['PUT'])
 def update_employee_by_id(id):
     data = request.get_json()
